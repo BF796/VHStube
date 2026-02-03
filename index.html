@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VHStube Logo Exploration</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f0f0f; /* YouTube Dark Mode Background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* The Main Container */
+        .logo-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transform: scale(2); /* Make it big for the demo */
+            user-select: none;
+        }
+
+        /* The "VHS" Text Part */
+        .vhs-text {
+            color: #fff;
+            font-size: 50px;
+            letter-spacing: -2px;
+            position: relative;
+            /* subtle text shadow for depth */
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.5); 
+        }
+
+        /* The "Tube" Box Part */
+        .tube-box {
+            background-color: #ff0000;
+            color: white;
+            padding: 0px 12px;
+            border-radius: 12px;
+            font-size: 50px;
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+        }
+
+        /* --- GLITCH ANIMATION EFFECTS --- */
+
+        /* Clone the logo for the RGB split effect (Cyan/Magenta offset) */
+        .logo-container::before,
+        .logo-container::after {
+            content: "VHStube"; /* Note: This simplistic approach works best if 'tube' isn't in a box, 
+                                     but for this complex logo, we apply the glitch to the container blocks instead */
+            display: none; 
+        }
+
+        /* Apply glitch to the VHS text specifically */
+        .vhs-text::before, .vhs-text::after {
+            content: "VHS";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .vhs-text::before {
+            color: #0ff; /* Cyan */
+            z-index: -1;
+            animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+        }
+
+        .vhs-text::after {
+            color: #f0f; /* Magenta */
+            z-index: -2;
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        /* Apply glitch to the Tube Box specifically */
+        .tube-box::before, .tube-box::after {
+            content: "Tube";
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0px 12px; /* Match parent padding */
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            background: transparent;
+            mix-blend-mode: screen;
+        }
+
+        /* --- ANIMATIONS --- */
+
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 1px); }
+            20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); }
+            40% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 2px); }
+            60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); }
+            80% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 1px); }
+            100% { clip-path: inset(30% 0 50% 0); transform: translate(1px, -1px); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -1px); }
+            20% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 2px); }
+            40% { clip-path: inset(30% 0 20% 0); transform: translate(2px, 1px); }
+            60% { clip-path: inset(10% 0 80% 0); transform: translate(-1px, -2px); }
+            80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, 2px); }
+            100% { clip-path: inset(70% 0 10% 0); transform: translate(-2px, -1px); }
+        }
+
+        /* --- SCANLINE OVERLAY (The TV Effect) --- */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Subtle flicker */
+        .logo-container {
+            animation: flicker 4s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1; }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.8; }
+        }
+
+        /* Play Icon styling */
+        .play-icon {
+            display: inline-block;
+            width: 0; 
+            height: 0; 
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 16px solid white;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="scanlines"></div>
+
+    <div class="logo-container">
+        <span class="vhs-text">VHS</span>
+        
+        <div class="tube-box">
+            <div class="play-icon"></div>Tube
+        </div>
+    </div>
+
+</body>
+</html>
